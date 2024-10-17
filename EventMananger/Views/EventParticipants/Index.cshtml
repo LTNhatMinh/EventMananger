@@ -1,0 +1,87 @@
+﻿@model EventMananger.Models.EventParticipantViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Event Participants</h1>
+@if ((User.IsInRole("Admin") || User.IsInRole("Manager")))
+{
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+}
+<form asp-controller="EventParticipants" asp-action="Index" method="get" class="mb-5 ">
+    <div class="row g-3 align-items-center justify-content-end">
+        <div class="col-md-auto">
+            <select class="form-select" asp-for="EventNames" asp-items="Model.Name">
+                <option value="">All</option>
+            </select>
+        </div>
+        <div class="col-md-auto">
+            <label class="col-form-label">Title:</label>
+        </div>
+        <div class="col-md-auto">
+            <input type="text" class="form-control" name="SearchString" />
+        </div>
+        <div class="col-md-auto">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+
+                <th>
+                    Event Image
+                </th>
+                <th>
+                    Event Name
+                </th>
+                <th>
+                    Participant Name
+                </th>
+                <th>
+                    Participant Email
+                </th>
+                <th>
+                    Participant Phone
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.EventParticipants)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.EventImage" alt="@item.EventName" style="max-width: 100px; max-height: 100px;" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventParticipantName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventParticipantEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventParticipantPhone)
+                    </td>
+                    <td style="text-align: right;">
+                        <a class="btn btn-success" asp-action="Details" asp-route-id="@item.EventParticipantId">Details</a> 
+                        @if ((User.IsInRole("Admin") || User.IsInRole("Manager")))
+                        {
+                        <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.EventParticipantId">Edit</a> 
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.EventParticipantId">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,47 @@
+﻿@model EventMananger.Models.EventParticipant
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-center">Details</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md offset-md ">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Event Participant Details</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <img src="@Url.Content(Model.EventImage)" class="card-img-top img-fluid" style="width: 250px; height: 180px;" />
+                        </div>
+                        <div class="col-sm-8">
+                            <dl class="row">
+
+                                <dt class="col-sm-4 text-right" style="margin-bottom: 30px">Event Name</dt>
+                                <dd class="col-sm-8" style="margin-bottom: 30px">@Html.DisplayFor(model => model.EventName)</dd>
+
+                                <dt class="col-sm-4 text-right" style="margin-bottom: 30px">Participant Name</dt>
+                                <dd class="col-sm-8" style="margin-bottom: 30px">@Html.DisplayFor(model => model.EventParticipantName)</dd>
+
+                                <dt class="col-sm-4 text-right" style="margin-bottom: 30px">Participant Email</dt>
+                                <dd class="col-sm-8" style="margin-bottom: 30px">@Html.DisplayFor(model => model.EventParticipantEmail)</dd>
+
+                                <dt class="col-sm-4 text-right" >Participant Phone</dt>
+                                <dd class="col-sm-8" >@Html.DisplayFor(model => model.EventParticipantPhone)</dd>
+                            </dl>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Edit" asp-route-id="@Model?.EventParticipantId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

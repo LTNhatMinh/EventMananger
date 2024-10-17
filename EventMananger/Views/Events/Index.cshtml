@@ -1,0 +1,112 @@
+﻿@model EventMananger.Models.EventTypeViewModel
+
+@{
+    ViewData["Title"] = "Event List";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+
+<div class="container">
+    @if ((User.IsInRole("Admin") || User.IsInRole("Manager")))
+    {
+        <div class="row mb-4">
+            <div class="col text-end">
+            <a asp-action="Create" class="btn btn-primary">Create new event</a>
+        </div>
+    </div>
+    }
+    <form asp-controller="Events" asp-action="Index" method="get" class="mb-5 ">
+        <div class="row g-3 align-items-center justify-content-end">
+            <div class="col-md-auto">
+                <select class="form-select" asp-for="EventTypes" asp-items="Model.Types">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <div class="col-md-auto">
+                <label class="col-form-label">Title:</label>
+            </div>
+            <div class="col-md-auto">
+                <input type="text" class="form-control" name="SearchString" />
+            </div>
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        @if (Model.Events != null && Model.Events.Count > 0)
+        {
+            @foreach (var item in Model.Events)
+            {
+
+                <div class="col mb-4">
+
+                    <div class="card h-100">
+                        <img src="@Url.Content(item.EventImage)" class="card-img-top" style="height: 100%" alt="Event Image">
+                        <div class="card-body" style="padding-bottom: 0px">
+                            <h5 class="card-title">@item.EventName</h5>
+                            <p class="card-text">
+                                <strong>Organizer:</strong> @item.EventOrganizer
+                            </p>
+                            <p>
+                                <strong>Type:</strong> @item.EventType
+                            </p>
+                            <p>
+                                <strong>Date:</strong> @item.EventDate.ToString("dd/MM/yyyy")
+                            </p>
+                            <p>
+                                <strong>Location:</strong> @item.EventLocation
+                            </p>
+                            <p>
+                                <strong>Status:</strong> <span class="@GetStatusColor(item.EventStatus)">@item.EventStatus</span>
+                            </p>
+
+                        </div>
+                        <div class="text-end">
+                            <div class="btn-group m-1">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" asp-action="Details" asp-route-id="@item.EventId">Details</a></li>
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                                    {
+                                        <li><a class="dropdown-item" asp-action="Edit" asp-route-id="@item.EventId">Edit</a></li>
+                                        <li><a class="dropdown-item" asp-action="Delete" asp-route-id="@item.EventId">Delete</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col">
+                <p>No events found.</p>
+            </div>
+        }
+    </div>
+</div>
+
+@functions {
+    public string GetStatusColor(string status)
+    {
+        switch (status)
+        {
+            case "Beginning":
+                return "text-primary fw-bold";
+            case "Accomplished":
+                return "text-success fw-bold";
+            case "Haven't started yet":
+                return "text-warning fw-bold";
+            case "Pause":
+                return "text-danger fw-bold";
+            default:
+                return "";
+        }
+    }
+}

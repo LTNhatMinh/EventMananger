@@ -1,0 +1,86 @@
+﻿@model EventMananger.Models.EventParticipant
+
+@{
+    ViewData["Title"] = "Create";
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Khi trang tải xong, gán ngay dữ liệu của sự kiện đầu tiên vào ô input eventImageInput
+        var firstEvent = document.getElementById("eventNameSelect").options[0].value;
+        console.log("First Event:", firstEvent); // In ra giá trị của sự kiện đầu tiên để debug
+        updateEventImage(firstEvent);
+    });
+
+
+    function updateEventImage(selectedEvent) {
+        $.ajax({
+            url: '@Url.Action("GetEventImage", "EventParticipants")',
+            type: 'GET',
+            data: { eventName: selectedEvent },
+            success: function (response) {
+                document.getElementById("eventImageInput").value = response;
+            },
+            error: function () {
+                console.log('Failed to retrieve EventImage.');
+            }
+        });
+    }
+</script>
+
+
+<h1>Create</h1>
+
+<h4>EventParticipant</h4>
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EventName" class="control-label">Event Name</label>
+                <select asp-for="EventName" class="form-control" id="eventNameSelect" onchange="updateEventImage(this.value)">
+                    @foreach (var ev in ViewBag.Events)
+                    {
+                        <option value="@ev.EventName">@ev.EventName</option>
+                    }
+                </select>
+                <span asp-validation-for="EventName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventImage" class="control-label">Event Image</label>
+                <input id="eventImageInput" asp-for="EventImage" class="form-control" readonly />
+                <span asp-validation-for="EventImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventParticipantName" class="control-label">Participant Name</label>
+                <input asp-for="EventParticipantName" class="form-control" />
+                <span asp-validation-for="EventParticipantName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventParticipantEmail" class="control-label">Participant Email</label>
+                <input asp-for="EventParticipantEmail" class="form-control" />
+                <span asp-validation-for="EventParticipantEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventParticipantPhone" class="control-label">Participant Phone</label>
+                <input asp-for="EventParticipantPhone" class="form-control" />
+                <span asp-validation-for="EventParticipantPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

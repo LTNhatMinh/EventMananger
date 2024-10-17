@@ -1,0 +1,57 @@
+﻿@model EventMananger.Models.Event
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-center">Details</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md offset-md ">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Event Details</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <img src="@Url.Content(Model.EventImage)" class="card-img-top img-fluid" style="height: 100%;" />
+                        </div>
+                        <div class="col-sm-8">
+                            <dl class="row">
+                                <dt class="col-sm-4">Event Name</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.EventName)</dd>
+
+                                <dt class="col-sm-4">Event Type</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.EventType)</dd>
+
+                                <dt class="col-sm-4">Event Organizer</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.EventOrganizer)</dd>
+
+                                <dt class="col-sm-4">Event Date</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.EventDate)</dd>
+
+                                <dt class="col-sm-4">Event Location</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.EventLocation)</dd>
+
+                                <dt class="col-sm-4">Event Status</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.EventStatus)</dd>
+
+                                <dt class="col-sm-4">Event Funding</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.EventFunding)</dd>
+
+                                <dt class="col-sm-4">Event Description</dt>
+                                <dd class="col-sm-8">@Html.DisplayFor(model => model.EventDescription)</dd>
+                            </dl>
+                        </div>
+                    </div>
+   
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Edit" asp-route-id="@Model?.EventId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

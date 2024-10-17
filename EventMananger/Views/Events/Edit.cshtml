@@ -1,0 +1,88 @@
+﻿@model EventMananger.Models.Event
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="EventId" />
+                <div class="mb-3">
+                    <label for="EventImage" class="form-label">Event Image Link</label>
+                    <input type="text" asp-for="EventImage" class="form-control" id="EventImage">
+                    <span asp-validation-for="EventImage" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="EventName" class="form-label">Event Name</label>
+                    <input type="text" asp-for="EventName" class="form-control" id="EventName">
+                    <span asp-validation-for="EventName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="EventType" class="form-label">Event Type</label>
+                    <select asp-for="EventType" class="form-select" id="EventType">
+                        <option value="In the home">In the home</option>
+                        <option value="Out side">Out side</option>
+                    </select>
+                    <span asp-validation-for="EventType" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="EventOrganizer" class="form-label">Event Organizer</label>
+                    <input type="text" asp-for="EventOrganizer" class="form-control" id="EventOrganizer">
+                    <span asp-validation-for="EventOrganizer" class="text-danger"></span>
+                </div>
+                <div class="row g-3">
+                    <div class="col">
+                        <label for="EventDate" class="form-label">Event Date</label>
+                        <input type="date" asp-for="EventDate" class="form-control" id="EventDate">
+                        <span asp-validation-for="EventDate" class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label for="EventLocation" class="form-label">Event Location</label>
+                        <input type="text" asp-for="EventLocation" class="form-control" id="EventLocation">
+                        <span asp-validation-for="EventLocation" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="EventStatus" class="form-label">Event Status</label>
+                        <select asp-for="EventStatus" class="form-select" id="EventStatus">
+                            <option value="Beginning">Beginning</option>
+                            <option value="Accomplished">Accomplished</option>
+                            <option value="Haven't started yet">Haven't started yet</option>
+                            <option value="Pause">Pause</option>
+                        </select>
+                        <span asp-validation-for="EventStatus" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="EventFunding" class="form-label">Event Funding</label>
+                    <input type="text" asp-for="EventFunding" class="form-control" id="EventFunding">
+                    <span asp-validation-for="EventFunding" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="EventDescription" class="form-label">Event Description</label>
+                    <textarea asp-for="EventDescription" class="form-control" id="EventDescription"></textarea>
+                    <span asp-validation-for="EventDescription" class="text-danger"></span>
+                </div>
+                <div class="mb-3 text-center">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
